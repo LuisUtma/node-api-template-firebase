@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import './env.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
+import {getFirestore} from 'firebase/firestore';
 import router from './routes/router.js';
 import verifyApiKey from './middlewares/verifyApiKey.js';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -17,17 +18,18 @@ const app = express();
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyDhu4mr1JuHMGAf8xPUFo16BJZR7tXm9Oc',
-  authDomain: 'utma-sda.firebaseapp.com',
-  projectId: 'utma-sda',
-  storageBucket: 'utma-sda.appspot.com',
-  messagingSenderId: '590082649662',
-  appId: '1:590082649662:web:23c3bfdd23867045162b6f',
-  measurementId: 'G-VDJR68GM9N',
+  apiKey: process.env.FIREBASE_APIKEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp)
 
 // config bcrypt
 const saltRounds = 15;
